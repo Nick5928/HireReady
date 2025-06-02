@@ -3,7 +3,13 @@ import React, { useState } from 'react';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import ReactMarkdown from 'react-markdown';
 import axios from "axios";
 export default function UserInput() {
@@ -17,13 +23,13 @@ export default function UserInput() {
         resume,
     });
     return response
-};
+  };
 
-const handleSubmit = async () => {
-    const response = await scoreResume({ jobDescription, resume })
-    console.log(response)
-    setOutput(response.data.markdown);
-}
+  const handleSubmit = async () => {
+      const response = await scoreResume({ jobDescription, resume })
+      console.log(response)
+      setOutput(response.data.markdown);
+  }
 
   async function handleFileChange(event) {
     const file = event.target.files[0];
@@ -48,19 +54,27 @@ const handleSubmit = async () => {
 
   return (
     <div>
-      <div className="grid w-full max-w-sm items-center gap-3">
-        <Label htmlFor="Resume">Upload your resume</Label>
-        <Input id="Resume" type="file" accept="application/pdf" onChange={handleFileChange} />
+      <div className='flex flex-col items-center justify-center mt-10'>
+        <div className="w-full max-w-lg mx-auto">
+          <Card>
+            <CardHeader>
+              <CardTitle>Resume Upload</CardTitle>
+              <CardDescription>Upload resume here for scoring</CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <Input id="Resume" type="file" accept="application/pdf" onChange={handleFileChange} />
+              <Textarea placeholder="Type your job description here." value={jobDescription} onChange={(e) => {
+                      setJobDescription(e.target.value)}
+                      }/>
+              <Button onClick={handleSubmit}>Send message</Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-      <div className="grid w-full gap-2">
-            <Textarea placeholder="Type your job description here." value={jobDescription} onChange={(e) => {
-                setJobDescription(e.target.value)}
-                }/>
-            <Button onClick={handleSubmit}>Send message</Button>
-        </div>
-        <div className="grid w-full gap-2 prose">
+      <div className="w-full prose max-w-[90%] mx-auto">
           <ReactMarkdown>{output}</ReactMarkdown>
-        </div>
+      </div>
     </div>
 
 
