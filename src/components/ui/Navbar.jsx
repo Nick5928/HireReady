@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation'
 export default function Navbar() {
 
   const supabase = createClient();
+  const router = useRouter();
   const [user, setUser] = useState(null)
-
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user)
