@@ -1,13 +1,20 @@
 import UserInput from "@/components/UserInput";
-import { LoginForm } from "@/components/login-form"
-export default function Login() {
-  return (
-    <main>
-      <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <LoginForm/>
-      </div>
-    </div>
-    </main>
-  );
+import Navbar from "@/components/ui/Navbar";
+
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+
+export default async function Home(){
+    const supabase = await createClient();
+
+    const { data, error } = await supabase.auth.getUser()
+    if (error || !data?.user) {
+        redirect('/login')
+    }
+    return (
+        <div>
+            <Navbar/>
+            <UserInput />
+        </div>
+    );
 }

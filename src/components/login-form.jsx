@@ -15,87 +15,54 @@ import { useRouter } from 'next/navigation'
 import axios from "axios"
 
 export function LoginForm({
+  login,
+  signup,
   className,
   ...props
 }) {
   const log = process.env.NEXT_PUBLIC_LOG === 'true'
   const [mode, setMode] = useState("login");
-  const [invalidEmail, setInvalidEmail] = useState(false);
-  const [invalidPass, setInvalidPass] = useState(false);
-  const [errorOccured, setErrorOccured] = useState(false);
-  const [wrongCred, setWrongCred] = useState(false);
-  const router = useRouter()
-
-
-  const onLogin = async ({ email, password }) => {
-    try{
-      const response = await axios.post("/api/login", {
-          email,
-          password,
-      });
-      return response
-    }
-    catch (error) {
-      setWrongCred(true);
-      return error.response
-    }
-  };
-
-  const onSignup = async ({ email, password }) => {
-    const response = await axios.post("/api/signup", {
-        email,
-        password,
-    });
-    return response
-  }
+  const [error, setError] = useState('');
+  const [internalError, setInternalError] = useState(false);
 
   const handleSubmit = async (e) => {
-    setWrongCred(false);
-    setErrorOccured(false);
-    setInvalidEmail(false);
-    setInvalidPass(false);
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    setError('');
+    setInternalError(false);
+    const formData = new FormData(e.target);
+    const email = formData.get("email");
+    const password = formData.get("password")
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
     if (mode === 'login') {
-      const response = await onLogin({ email, password });
+      const response = await login(formData);
       log && console.log(response);
-      if(wrongCred) return;
-
-     if(response.status === 200) {
-      log && console.log(true)
-      //router.push('/home')
-    }
-    else if(response.status != 200) {
-      setErrorOccured(true);
-    }
-
+      if(response.code === "invalid_credentials") {
+        setError(response.code)
+        return;
+      }
+      setInternalError(true);
     }
     else if(mode === 'signup') {
       if (!emailRegex.test(email)) {
-        setInvalidEmail(true);
+        setError("invalid_email");
         return;
       }
 
       if (!passwordRegex.test(password)) {
-        setInvalidPass(true);
+        setError("invalid_pass");
         return;
       }
-      const response = await onSignup({ email, password });
+      const response = await signup(formData);
       log && console.log(response);
 
-      if(response.status === 200) {
-        setMode("login");
+      if(response.code === 'user_already_exists') {
+        setError(response.code)
+        return;
       }
-      else if(response.status != 200) {
-        setErrorOccured(true);
-      }
-      setInvalidEmail(false);
-      setInvalidPass(false);
-      return;
+      setInternalError(true)
+
     }
   };
 
@@ -109,8 +76,11 @@ export function LoginForm({
             {mode === "login"
               ? "Enter your email below to login to your account"
               : "Enter your email below to create a new account"}
-              {mode === 'login' && wrongCred && (
-                  <p className="text-red-500 text-sm">Invalid email or password</p>
+              {mode === 'login' && error === 'invalid_credentials' && (
+                  <p className="text-red-500 text-sm">Invalid email or password. Please retype credentials.</p>
+                )}
+              {mode === 'signup' && error === 'user_already_exists' && (
+                  <p className="text-red-500 text-sm">User already exists please login.</p>
                 )}
           </CardDescription>
         </CardHeader>
@@ -119,8 +89,8 @@ export function LoginForm({
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
-                {mode === 'signup' && invalidEmail && (
+                <Input name="email" id="email" type="email" placeholder="m@example.com" required />
+                {mode === 'signup' && error === 'invalid_email' && (
                   <p className="text-red-500 text-sm">Invalid email</p>
                 )}
               </div>
@@ -135,11 +105,11 @@ export function LoginForm({
                     </a>
                   )} */}
                 </div>
-                <Input id="password" type="password" required />
-                {mode === 'signup' && !invalidPass && (
+                <Input name="password" id="password" type="password" required />
+                {mode === 'signup' && error != 'invalid_pass' && (
                     <p className="text-sm">Use 8+ characters with upper, lower, number & symbol.</p>
                 )}
-                {mode === 'signup' && invalidPass && (
+                {mode === 'signup' && error === 'invalid_pass' && (
                     <p className="text-red-500 text-sm">Invalid password use 8+ characters with upper, lower, number & symbol.</p>
                 )}
               </div>
@@ -151,7 +121,7 @@ export function LoginForm({
                   Continue with Google
                 </Button> */}
               </div>
-              {errorOccured && (
+              {internalError && (
                   <p className="text-red-500 text-sm">Error occured try again later.</p>
                 )}
             </div>
