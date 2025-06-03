@@ -34,12 +34,10 @@ export default function UserInput() {
   const handleSubmit = async () => {
       if(mode === "score") {
         const response = await scoreResume({ jobDescription, resume })
-        console.log(response)
         setOutput(response.data.markdown);
       }
       else {
         const response = await optimizeResume({ resume , jobTitle })
-        console.log(response)
         setOutput(response.data.markdown);
       }
   }

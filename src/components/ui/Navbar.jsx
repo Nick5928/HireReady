@@ -7,8 +7,6 @@ export default function Navbar({ user }) {
 
   const supabase = createClient();
   const router = useRouter();
-  
-  console.log(user);
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut()
