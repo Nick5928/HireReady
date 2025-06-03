@@ -34,7 +34,7 @@ export function UserDetailsSheet({ data, supabase }) {
     return (
         <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Edit</Button>
+        <Button className='cursor-pointer' variant="outline">Edit</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
