@@ -22,15 +22,15 @@ export function ExperienceSheet({ data }) {
 
   const end_string = end_date === "present" ? end_date : `${end_date.toLocaleString('default', { month: 'long' })} ${end_date.getFullYear()}`
 
-  console.log(data);
+  const isAdd = data === "add"
     return (
         <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Edit</Button>
+        <Button variant="outline">{!isAdd ? 'Edit' : 'Add' }</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle className='text-xl'>{`${data.job_title} at ${data.company} `}</SheetTitle>
+          <SheetTitle className='text-xl'>{!isAdd ? `${data.job_title} at ${data.company}` : 'Add Experience'}</SheetTitle>
           <SheetDescription>
             Click save when you&apos;re done.
           </SheetDescription>
@@ -60,7 +60,7 @@ export function ExperienceSheet({ data }) {
           </div>
         </div>
         <SheetFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">{!isAdd ? 'Save Changes' : 'Add Education'}</Button>
           <SheetClose asChild>
             <Button className="w-full" variant="outline">Close</Button>
           </SheetClose>

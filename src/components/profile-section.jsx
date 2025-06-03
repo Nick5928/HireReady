@@ -10,25 +10,35 @@ import { Separator } from './ui/separator';
 import { UserDetailsSheet } from './user-details-sheet';
 import { ExperienceSheet } from './experience-sheet';
 import { EducationSheet } from './education-sheet';
+import { createClient } from '@/lib/supabase/client';
 export function ProfileSection({ data }) {
-  const handleCopy = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast.success("Copied to clipboard!");
-    } catch (err) {
-      toast.error("Failed to copy.");
-    }
-  };
-
+    const supabase = createClient();
+    const handleCopy = async (text) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            toast.success("Copied to clipboard!");
+        } catch (err) {
+            toast.error("Failed to copy.");
+        }
+    };
+  const profileIsEmpty = data.isEmpty
   return (
     <div className="w-full max-w-[30%] mx-auto mt-6 space-y-8">
         <Card>
             <CardHeader>
                 <CardTitle>
-                    <div className='flex flex-row'>
-                        <p onClick={() => handleCopy(`${data.first_name} ${data.last_name}`)} className="cursor-pointer hover:underline text-2xl font-[1000]">{`${data.first_name} ${data.last_name}`}</p>
+                    <div className='flex'>
+                        {
+                            profileIsEmpty ? (
+                                <p className='text-2xl font-[1000]'>Complete Your Profile</p>
+                            ) : (
+                                <p onClick={() => handleCopy(`${data.first_name} ${data.last_name}`)} className="cursor-pointer hover:underline text-2xl font-[1000]">
+                                    {`${data.first_name} ${data.last_name}`}
+                                </p>
+                            )
+                        }                        
                         <div className='ml-auto'>
-                            <UserDetailsSheet data={data}/>
+                            <UserDetailsSheet data={data} supabase={supabase}/>
                         </div>
                     </div>
                 </CardTitle>
@@ -44,7 +54,12 @@ export function ProfileSection({ data }) {
       <Card>
         <CardHeader>
           <CardTitle>
-                <p className='font-[900] text-xl'>Education</p>
+                <div className='flex'>
+                    <p className='font-[900] text-xl'>Education</p>
+                    <div className='ml-auto'>
+                            <EducationSheet data={"add"}/>
+                    </div>
+                </div>
             </CardTitle>
         </CardHeader>
         <CardContent>
@@ -76,7 +91,12 @@ export function ProfileSection({ data }) {
       <Card>
         <CardHeader>
             <CardTitle>
-                <p className='font-[900] text-xl'>Experience</p>
+                <div className='flex'>
+                    <p className='font-[900] text-xl'>Experience</p>
+                    <div className='ml-auto'>
+                        <ExperienceSheet data={"add"}/>
+                    </div>
+                </div>
             </CardTitle>
         </CardHeader>
         <CardContent>

@@ -7,7 +7,7 @@ import { ProfileSection } from "@/components/profile-section";
 
 export default async function Profile() {
   const supabase = await createClient();
-
+  
   const { data, error } = await supabase.auth.getUser()
   if (error || !data?.user) {
       redirect('/login')
@@ -19,14 +19,19 @@ export default async function Profile() {
     .eq('user_id', data.user.id)
     .single();
 
-  if (profileError || !profileData) {
-    console.error(profileError);
-    return <div>Error loading profile</div>;
-  }
-
-  const fullProfile = {
+  
+  let fullProfile = {
+    isEmpty: true,
     email: data.user.email,
-    ...profileData
+    user_id: data.user.id,
+  }
+  
+  if(profileData) {
+    fullProfile = {
+      isEmpty: false,
+      email: data.user.email,
+      ...profileData
+    }
   }
 
   return (

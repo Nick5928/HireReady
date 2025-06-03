@@ -12,18 +12,17 @@ import {
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
-import { Separator } from "./ui/separator"
 
 export function EducationSheet({ data }) {
-    console.log(data);
+    const isAdd = data === "add"
     return (
         <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Edit</Button>
+        <Button variant="outline">{!isAdd ? 'Edit' : 'Add'}</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle className='text-xl'>{`Edit ${data.school}`}</SheetTitle>
+          <SheetTitle className='text-xl'>{!isAdd ? `Edit ${data.school}` : "Add education"}</SheetTitle>
           <SheetDescription>
             Click save when you&apos;re done.
           </SheetDescription>
@@ -51,7 +50,7 @@ export function EducationSheet({ data }) {
           </div>
         </div>
         <SheetFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">{!isAdd ? 'Save Changes' : 'Add Education'}</Button>
           <SheetClose asChild>
             <Button className="w-full" variant="outline">Close</Button>
           </SheetClose>
