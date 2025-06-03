@@ -2,6 +2,7 @@ import Navbar from "@/components/ui/Navbar";
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { ProfileSection } from "@/components/profile-section";
 
 
 export default async function Profile() {
@@ -13,25 +14,8 @@ export default async function Profile() {
   }
   return (
     <div>
-      <Navbar/>
-      <div>
-        "Location
-        Email
-        Number
-        Education:
-          School
-          Degree
-          Start year
-          End year
-        Experience:
-          Job title
-          Company, Company location
-          Start date End date
-          description
-        Links:
-          LinkedIn"
-
-      </div>
+      <Navbar />
+      <ProfileSection/>
     </div>
   );
 }
