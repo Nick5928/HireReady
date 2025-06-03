@@ -12,10 +12,27 @@ export default async function Profile() {
   if (error || !data?.user) {
       redirect('/login')
   }
+
+  const { data: profileData, error: profileError } = await supabase
+    .from('profile')
+    .select('*, education(*), experience(*)')
+    .eq('user_id', data.user.id)
+    .single();
+
+  if (profileError || !profileData) {
+    console.error(profileError);
+    return <div>Error loading profile</div>;
+  }
+
+  const fullProfile = {
+    email: data.user.email,
+    ...profileData
+  }
+
   return (
     <div>
       <Navbar />
-      <ProfileSection/>
+      <ProfileSection data={fullProfile}/>
     </div>
   );
 }
