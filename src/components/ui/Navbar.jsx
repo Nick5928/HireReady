@@ -1,20 +1,14 @@
 'use client';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function Navbar() {
+export default function Navbar({ user }) {
 
   const supabase = createClient();
   const router = useRouter();
-  const [user, setUser] = useState(null)
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user)
-    })
-  }, [])
-
+  
+  console.log(user);
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut()
@@ -34,12 +28,14 @@ export default function Navbar() {
       <div className="space-x-4">
         <Link href="/profile" className="hover:text-blue-500">Profile</Link>
         <Link href="/better-resume" className="hover:text-blue-500">Better Resume</Link>
-        <button
+        {user && (
+          <button
           onClick={handleSignOut}
-          className="hover:text-blue-500 text-sm text-red-600"
+          className="hover:text-blue-500 cursor-pointer"
         >
           Logout
         </button>
+        )}
       </div>
     </nav>
   );

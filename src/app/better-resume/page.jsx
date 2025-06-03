@@ -13,7 +13,7 @@ export default async function Page() {
     }
   return (
     <div>
-      <Navbar/>
+      <Navbar user={data.user}/>
       <UserInput />
     </div>
   );

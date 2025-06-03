@@ -36,7 +36,7 @@ export default async function Profile() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar user={data.user}/>
       <ProfileSection data={fullProfile}/>
     </div>
   );
