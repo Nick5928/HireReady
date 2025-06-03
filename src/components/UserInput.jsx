@@ -54,26 +54,31 @@ export default function UserInput() {
 
   return (
     <div>
-      <div className='flex flex-col items-center justify-center mt-10'>
-        <div className="w-full max-w-lg mx-auto">
-          <Card>
-            <CardHeader>
-              <CardTitle>Resume Upload</CardTitle>
-              <CardDescription>Upload resume here for scoring</CardDescription>
-            </CardHeader>
-
-            <CardContent>
-              <Input id="Resume" type="file" accept="application/pdf" onChange={handleFileChange} />
-              <Textarea placeholder="Type your job description here." value={jobDescription} onChange={(e) => {
+      <div className="grid grid-cols-2 gap-2 max-w-[70%] rounded-lg border my-10 mx-auto">
+        <div className="grid grid-rows-4 border-r border-l">
+          <div className="row-span-1 p-6 border-b">
+            <div className='mb-2'>
+              <p className="font-semibold">Resume Upload</p>
+              <p className='font-light'>Upload Resume here</p>
+            </div>
+            <Input className='min-w-sm max-w-sm' id="Resume" type="file" accept="application/pdf" onChange={handleFileChange} />
+            {jobDescription != "" && resume != "" && (<div className='flex justify-start'><Button className="mt-4"onClick={handleSubmit}>Score Resume</Button></div>)}
+          </div>
+          <div className="row-span-3 flex p-6">
+            <div className='min-w-lg max-w-lg'>
+            <p className='mb-4'>Type job Description for scoring resume</p>
+            <Textarea placeholder="Type your job description here." value={jobDescription} onChange={(e) => {
                       setJobDescription(e.target.value)}
                       }/>
-              <Button onClick={handleSubmit}>Send message</Button>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="w-full prose max-w-[90%] mx-auto">
-          <ReactMarkdown>{output}</ReactMarkdown>
+        <div className="p-6">
+          <p className='flex justify-center text-3xl font-bold mb-2'>Model Output</p>
+          <div className='prose mx-auto'>
+            <ReactMarkdown>{output}</ReactMarkdown>
+          </div>
+        </div>
       </div>
     </div>
 

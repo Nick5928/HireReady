@@ -2,9 +2,9 @@ import Navbar from "@/components/ui/Navbar";
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import UserInput from "@/components/UserInput";
 
-
-export default async function Profile() {
+export default async function Page() {
   const supabase = await createClient();
 
     const { data, error } = await supabase.auth.getUser()
@@ -14,10 +14,7 @@ export default async function Profile() {
   return (
     <div>
       <Navbar/>
-      <div>
-        Better Resume
-
-      </div>
+      <UserInput />
     </div>
   );
 }
