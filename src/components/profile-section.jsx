@@ -38,16 +38,16 @@ export function ProfileSection({ data }) {
         router.refresh();
     }
   return (
-    <div className="w-full max-w-[30%] mx-auto mt-6 space-y-8">
+    <div className="max-w-[80%] md:max-w-[30%] mx-auto mt-6 space-y-8">
         <Card id="UserDetailsSection">
             <CardHeader>
                 <CardTitle>
                     <div className='flex'>
                         {
                             profileIsEmpty ? (
-                                <p className='text-2xl font-[1000]'>Complete Your Profile</p>
+                                <p className='font-[1000]'>Complete Your Profile</p>
                             ) : (
-                                <p onClick={() => handleCopy(`${data.first_name} ${data.last_name}`)} className="cursor-pointer hover:underline text-2xl font-[1000]">
+                                <p onClick={() => handleCopy(`${data.first_name} ${data.last_name}`)} className="cursor-pointer hover:underline font-[1000]">
                                     {`${data.first_name} ${data.last_name}`}
                                 </p>
                             )
@@ -59,7 +59,7 @@ export function ProfileSection({ data }) {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="text-lg">
+                <div className="">
                     <p onClick={() => handleCopy(data.location)} className="cursor-pointer hover:underline">{data.location}</p>
                     <p onClick={() => handleCopy(data.email)} className="cursor-pointer hover:underline">{data.email}</p>
                     <p onClick={() => handleCopy(data.number)}className="cursor-pointer hover:underline">{data.number}</p>
@@ -73,7 +73,7 @@ export function ProfileSection({ data }) {
                     <CardHeader>
                         <CardTitle>
                             <div className='flex'>
-                                <p className='font-[900] text-xl'>Education</p>
+                                <p className='font-[900]'>Education</p>
                                 <div className='ml-auto'>
                                         <EducationSheet data={data} supabase={supabase} type={"add"}/>
                                 </div>
@@ -81,7 +81,7 @@ export function ProfileSection({ data }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-lg">
+                        <div className="text-xs sm:text-base">
                             <ul>
                                 {data.education?.map((edu, index) => (
                                     <div key={index}>
@@ -95,9 +95,9 @@ export function ProfileSection({ data }) {
                                                     <p onClick={() => handleCopy(edu.end_year)} className="cursor-pointer hover:underline">{edu.end_year}</p>
                                                 </div>
                                             </li>
-                                            <div className='flex gap-3 ml-auto'>
+                                            <div className='flex gap-1 sm:gap-3 ml-auto'>
                                                 <EducationSheet data={edu} supabase={supabase} type={"edit"} />
-                                                <Button variant="outline" className="cursor-pointer" onClick={() => handleDelete(edu.id, 'education')}>Delete</Button>
+                                                <Button variant="outline" className="cursor-pointer" onClick={() => handleDelete(edu.id, 'education')}>Del</Button>
                                             </div>
                                         </div>
                                         {index != data.education.length - 1 && (<Separator/>) }
@@ -111,7 +111,7 @@ export function ProfileSection({ data }) {
                     <CardHeader>
                         <CardTitle>
                             <div className='flex'>
-                                <p className='font-[900] text-xl'>Experience</p>
+                                <p className='font-[900]'>Experience</p>
                                 <div className='ml-auto'>
                                     <ExperienceSheet data={data} supabase={supabase} type={"add"}/>
                                 </div>
@@ -119,7 +119,7 @@ export function ProfileSection({ data }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-lg">
+                        <div className="">
                             <ul>
                                 {data.experience?.map((exp, index)=> {
                                     const start_string = `${exp.start_month} ${exp.start_year}`

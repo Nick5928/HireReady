@@ -74,7 +74,7 @@ export function ExperienceSheet({ data, supabase, type}) {
       <SheetTrigger asChild>
         <Button className="cursor-pointer" variant="outline">{!isAdd ? 'Edit' : 'Add' }</Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="flex flex-col">
         <SheetHeader>
           <SheetTitle className='text-xl'>{!isAdd ? `${data.job_title} at ${data.company}` : 'Add Experience'}</SheetTitle>
           <SheetDescription>

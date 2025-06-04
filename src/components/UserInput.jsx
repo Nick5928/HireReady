@@ -65,14 +65,14 @@ export default function UserInput() {
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-2 max-w-[70%] rounded-lg border my-10 mx-auto">
-        <div className="grid grid-rows-4 border-r border-l">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-[70%] rounded-lg border my-10 mx-auto">
+        <div className="grid grid-rows-4 border-b md:border-b-0 md:border-r md:border-l">
           <div className="row-span-1 p-6 border-b">
-            <div className='mb-2'>
+            <div className='mb-2 min-w-full max-w-full'>
               <p className="font-semibold">Resume Upload</p>
               <p className='font-light'>Upload Resume here</p>
             </div>
-            <Input className='min-w-sm max-w-sm' id="Resume" type="file" accept="application/pdf" onChange={handleFileChange} />
+            <Input className='min-w-full max-w-full' id="Resume" type="file" accept="application/pdf" onChange={handleFileChange} />
             <div className='flex justify-center gap-x-4'>
                 <Button className="mt-4"onClick={toggleMode}>Toggle Mode</Button>
                 {jobDescription != "" && resume != "" && mode != "optimize" && (<Button className="mt-4"onClick={handleSubmit}>Score Resume</Button>)}
@@ -80,12 +80,12 @@ export default function UserInput() {
               </div>
           </div>
           <div className="row-span-3 flex p-6">
-            <div className='min-w-3xl max-w-3xl'>
+            <div className='min-w-full max-w-full'>
 
               {mode != "optimize" ? (
                 <>
                   <p className='mb-4'>Type job Description for scoring resume</p>
-                  <Textarea placeholder="Type your job description here." value={jobDescription} onChange={(e) => {
+                  <Textarea className="h-[80%]" placeholder="Type your job description here." value={jobDescription} onChange={(e) => {
                     setJobDescription(e.target.value)}
                     }/>
                 </>
@@ -103,10 +103,12 @@ export default function UserInput() {
             </div>
           </div>
         </div>
-        <div className="p-6">
+        <div className="w-full p-6">
           <p className='flex justify-center text-3xl font-bold mb-2'>{mode != "optimize" ? 'Score Resume Output' : 'ATS-Optimize Output'}</p>
-          <div className='prose mx-auto'>
-            <ReactMarkdown>{output}</ReactMarkdown>
+          <div className='w-full mx-auto'>
+            <div className='prose'>
+              <ReactMarkdown>{output}</ReactMarkdown>
+            </div>
           </div>
         </div>
       </div>
