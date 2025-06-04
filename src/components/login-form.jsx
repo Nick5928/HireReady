@@ -69,7 +69,7 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>{mode === "login" ? "Login to your HireReady account" : "Create a HireReadyaccount"}</CardTitle>
+          <CardTitle>{mode === "login" ? "Login to your HireReady account" : "Create a HireReady account"}</CardTitle>
           <CardDescription>
             {mode === "login"
               ? "Enter your email below to login to your account"
