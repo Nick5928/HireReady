@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "mkdir -p ./test/data && cp ./public/05-versions-space.pdf ./test/data/05-versions-space.pdf && echo 'Contents of ./test/data:' && ls -l ./test/data"
-
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
@@ -25,6 +24,7 @@
     "lucide-react": "^0.511.0",
     "next": "15.3.2",
     "openai": "^5.0.1",
+    "patch-package": "^8.0.0",
     "pdf-parse": "^1.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
