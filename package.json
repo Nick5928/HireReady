@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "mkdir -p ./test/data && cp ./public/05-versions-space.pdf ./test/data/05-versions-space.pdf"
+
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
