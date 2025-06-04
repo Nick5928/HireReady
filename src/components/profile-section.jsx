@@ -119,7 +119,7 @@ export function ProfileSection({ data }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="">
+                        <div className="text-xs sm:text-base">
                             <ul>
                                 {data.experience?.map((exp, index)=> {
                                     const start_string = `${exp.start_month} ${exp.start_year}`
@@ -142,7 +142,7 @@ export function ProfileSection({ data }) {
                                                 
                                                 <p className='cursor-pointer hover:underline whitespace-pre-line font-normal' onClick={() => handleCopy(exp.description)}>{exp.description}</p>
                                             </li>
-                                            <div className='ml-auto flex gap-3'>
+                                            <div className='flex gap-1 sm:gap-3 ml-auto'>
                                                 <ExperienceSheet data={exp} supabase={supabase} type={"edit"} />
                                                 <Button variant="outline" className="cursor-pointer" onClick={() => handleDelete(exp.id, 'experience')}>Delete</Button>
                                             </div>
