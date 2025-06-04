@@ -144,7 +144,7 @@ export function ProfileSection({ data }) {
                                             </li>
                                             <div className='flex gap-1 sm:gap-3 ml-auto'>
                                                 <ExperienceSheet data={exp} supabase={supabase} type={"edit"} />
-                                                <Button variant="outline" className="cursor-pointer" onClick={() => handleDelete(exp.id, 'experience')}>Delete</Button>
+                                                <Button variant="outline" className="cursor-pointer" onClick={() => handleDelete(exp.id, 'experience')}>Del</Button>
                                             </div>
                                         </div>
                                         {index != data.experience.length - 1 && (<Separator/>)}
