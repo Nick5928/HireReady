@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import pdfParse from 'pdf-parse';
+import pdfParse from '@bingsjs/pdf-parse';
 
 export const config = {
   api: {
