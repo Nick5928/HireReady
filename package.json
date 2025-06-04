@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "mkdir -p ./test/data && cp ./public/05-versions-space.pdf ./test/data/05-versions-space.pdf"
+    "postinstall": "mkdir -p ./test/data && cp ./public/05-versions-space.pdf ./test/data/05-versions-space.pdf && echo 'Contents of ./test/data:' && ls -l ./test/data"
 
   },
   "dependencies": {
