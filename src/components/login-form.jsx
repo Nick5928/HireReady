@@ -93,24 +93,44 @@ export function LoginForm({
                 )}
               </div>
               <div className="grid gap-3">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  {/* {mode === "login" && (
-                    <a
-                      href="#"
-                      className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
-                      Forgot your password?
-                    </a>
-                  )} */}
-                </div>
-                <Input name="password" id="password" type="password" required />
-                {mode === 'signup' && error != 'invalid_pass' && (
-                    <p className="text-sm">Use 8+ characters with upper, lower, number & symbol.</p>
-                )}
-                {mode === 'signup' && error === 'invalid_pass' && (
-                    <p className="text-red-500 text-sm">Invalid password use 8+ characters with upper, lower, number & symbol.</p>
-                )}
-              </div>
+                    <div className="flex items-center">
+                      <Label htmlFor="password">Password</Label>
+                      {/* {mode === "login" && (
+                        <a
+                          href="#"
+                          className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
+                          Forgot your password?
+                        </a>
+                      )} */}
+                    </div>
+                    <Input name="password" id="password" type="password" required />
+                    {mode === 'signup' && error != 'invalid_pass' && (
+                        <p className="text-sm">Use 8+ characters with upper, lower, number & symbol.</p>
+                    )}
+                    {mode === 'signup' && error === 'invalid_pass' && (
+                        <p className="text-red-500 text-sm">Invalid password use 8+ characters with upper, lower, number & symbol.</p>
+                    )}
+                  </div>
+              {mode === 'signup' && (
+                <>
+                  <div className="grid gap-3">
+                    <Label htmlFor="first_name">First Name</Label>
+                    <Input name="first_name" id="first_name" placeholder="John" type="text" required />
+                  </div>
+                  <div className="grid gap-3">
+                    <Label htmlFor="last_name">Last Name</Label>
+                    <Input name="last_name" id="last_name" placeholder="Doe" type="text" required />
+                  </div>
+                  <div className="grid gap-3">
+                    <Label htmlFor="location">Location</Label>
+                    <Input name="location" id="location" type="text" placeholder="City, State" required />
+                  </div>
+                  <div className="grid gap-3">
+                    <Label htmlFor="number">Phone Number</Label>
+                    <Input name="number" id="number" type="text" required />
+                  </div>
+                </>
+              )}
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
                   {mode === "login" ? "Login" : "Sign Up"}

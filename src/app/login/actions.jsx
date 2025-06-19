@@ -36,8 +36,9 @@ export async function signup(formData) {
     password: formData.get('password'),
   }
 
-  const { error } = await supabase.auth.signUp(data)
 
+
+  const { data: userData, error } = await supabase.auth.signUp(data)
   if (error) {
     return {
       errorMessage: error,
@@ -45,6 +46,20 @@ export async function signup(formData) {
       code: error.code,
     }
   }
+
+  
+  const updatedData = {
+        first_name: formData.get('first_name'),
+        last_name: formData.get('last_name'),
+        location: formData.get('location'),
+        number: formData.get('number'),
+        user_id: userData.user.id,
+      };
+  console.log(updatedData);
+  await supabase
+    .from('profile')
+    .upsert([updatedData], { onConflict: ['user_id'] })
+
 
   revalidatePath('/', 'layout')
   redirect('/')
